@@ -1,2 +1,4 @@
 # BrqTestMobile
-Projeto Mobile
+Projeto Mobile em Kotlin
+
+Inclui ORMLITE, Acessibilidade, Mapas.
