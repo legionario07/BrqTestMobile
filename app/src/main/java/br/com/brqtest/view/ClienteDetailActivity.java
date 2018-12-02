@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.*;
 import br.com.brqtest.R;
+import br.com.brqtest.database.DatabaseHelper;
+import br.com.brqtest.database.dao.ClienteDao;
+import br.com.brqtest.database.dao.EnderecoDao;
 import br.com.brqtest.deserializers.CEPDeserializer;
 import br.com.brqtest.model.Cliente;
 import br.com.brqtest.model.Endereco;
@@ -18,6 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -31,12 +35,14 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private ProgressBar progressBar;
 
+    private DatabaseHelper dh;
+    private EnderecoDao enderecoDao;
+    private ClienteDao clienteDao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_customer);
-
 
         inpID = findViewById(R.id.inpID);
         inpNome = findViewById(R.id.inpName);
@@ -51,20 +57,27 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
         imgSalvar = findViewById(R.id.imgSalvar);
         imgDeletar = findViewById(R.id.imgDeletar);
 
+        dh = new DatabaseHelper(ClienteDetailActivity.this);
+        try {
+            clienteDao = new ClienteDao(dh.getConnectionSource());
+            enderecoDao = new EnderecoDao(dh.getConnectionSource());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         if (savedInstanceState != null) {
             restoreBundle(savedInstanceState);
         }
 
-        if (getIntent().getExtras()!=null && getIntent().getExtras().containsKey("CLIENTE_DETAIL")) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CLIENTE_DETAIL")) {
             cliente = (Cliente) getIntent().getSerializableExtra("CLIENTE_DETAIL");
             fillDataInView();
         } else {
             cliente = new Cliente();
             imgDeletar.setVisibility(View.INVISIBLE);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, 0,0);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, 0, 0);
             imgDeletar.setLayoutParams(layoutParams);
         }
-
 
 
         imgSalvar.setOnClickListener(this);
@@ -94,8 +107,8 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
                     callCEPByCEP.enqueue(new Callback<Endereco>() {
                         @Override
                         public void onResponse(Call<Endereco> call, Response<Endereco> response) {
-                                Endereco cep = response.body();
-                                fillEnderecoInView(cep);
+                            Endereco cep = response.body();
+                            fillEnderecoInView(cep);
 
                             progressBar.setVisibility(View.INVISIBLE);
                         }
@@ -201,15 +214,39 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
                     return;
                 }
 
+                //Eh update?
+                if(cliente.getId()!=null && cliente.getId()>0){
+                    try {
+                        enderecoDao.update(cliente.getEndereco());
+                        clienteDao.update(cliente);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        cliente.getEndereco().setId(enderecoDao.create(cliente.getEndereco()));
+                        clienteDao.create(cliente);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 break;
 
             case R.id.imgDeletar:
 
-                finish();
+                try {
+                    clienteDao.delete(cliente);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
 
                 break;
         }
+
+        finish();
 
 
     }

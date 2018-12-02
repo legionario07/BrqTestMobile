@@ -15,7 +15,7 @@ public class Cliente extends EntidadeDominio {
     private String nameFull;
     @DatabaseField
     private String cpf;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Endereco endereco;
     @DatabaseField
     private Date dataDeNascimento;

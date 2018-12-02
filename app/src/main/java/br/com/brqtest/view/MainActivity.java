@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity{
     private ClienteDao clienteDao;
     private EnderecoDao enderecoDao;
 
+    private  List<Endereco> enderecos;
+
 
 
     @Override
@@ -41,11 +44,11 @@ public class MainActivity extends AppCompatActivity{
         dh = new DatabaseHelper(MainActivity.this);
         try {
             clienteDao  = new ClienteDao(dh.getConnectionSource());
+            enderecoDao = new EnderecoDao(dh.getConnectionSource());
             clientes = clienteDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //getClientes();
 
         lstView = findViewById(R.id.lstClientes);
 
@@ -56,16 +59,27 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void getClientes() {
-        dh = new DatabaseHelper(MainActivity.this);
-
-        try {
-
-            enderecoDao = new EnderecoDao(dh.getConnectionSource());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(enderecos!=null) {
+            for (Endereco ed : enderecos) {
+                try {
+                    enderecoDao.delete(ed);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-       // builderClientes();
+        if(clientes!=null) {
+
+            for (Cliente c : clientes) {
+                try {
+                    clienteDao.delete(c);
+                    //enderecoDao.delete(c.getEndereco());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 
     }
@@ -83,6 +97,7 @@ public class MainActivity extends AppCompatActivity{
         endereco.setUf("SP");
         endereco.setBairro("MOGILAR");
         endereco.setCidade("MOGI DAS CRUZES");
+        endereco.setLogradouro("Rua Manuel de Oliveira");
         cliente.setEndereco(endereco);
 
         Cliente cliente1 = new Cliente();
@@ -95,6 +110,7 @@ public class MainActivity extends AppCompatActivity{
         endereco.setCep("03251-060");
         endereco.setUf("SP");
         endereco.setBairro("INDUSTRIAL");
+        endereco.setLogradouro("Rua Manuel de Oliveira");
         endereco.setCidade("SANTO ANDRÉ");
         cliente1.setEndereco(endereco);
 
@@ -108,6 +124,7 @@ public class MainActivity extends AppCompatActivity{
         endereco.setCep("03251-060");
         endereco.setUf("SP");
         endereco.setBairro("INDUSTRIAL");
+        endereco.setLogradouro("Rua Manuel de Oliveira");
         endereco.setCidade("SANTO ANDRÉ");
         cliente2.setEndereco(endereco);
 
@@ -120,6 +137,7 @@ public class MainActivity extends AppCompatActivity{
         endereco.setCep("03251-060");
         endereco.setUf("SP");
         endereco.setBairro("INDUSTRIAL");
+        endereco.setLogradouro("Rua Manuel de Oliveira");
         endereco.setCidade("SANTO ANDRÉ");
         cliente3.setEndereco(endereco);
 
@@ -134,9 +152,15 @@ public class MainActivity extends AppCompatActivity{
                 c.getEndereco().setId(enderecoDao.create(c.getEndereco()));
                 c.setId(clienteDao.create(c));
             } catch (SQLException e) {
-                e.printStackTrace();
+                Log.e("SQL", e.getMessage());
             }
 
+        }
+
+        try {
+            clientes = clienteDao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -163,5 +187,11 @@ public class MainActivity extends AppCompatActivity{
         }else{
             clienteAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
