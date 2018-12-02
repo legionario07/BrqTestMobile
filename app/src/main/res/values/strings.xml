@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">BRQTest</string>
+    <string name="clientes">Clientes</string>
+    <string name="dt_nasc">Dt Nasc</string>
+    <string name="cpf">CPF</string>
+    <string name="nome">Nome</string>
+    <string name="lista_de_clientes">Lista de Clientes</string>
+    <string name="nome_do_cliente">Nome do Cliente</string>
+    <string name="data_de_nascimento">Data de Nascimento</string>
+    <string name="data_de_nasc">Data de Nasc.</string>
+    <string name="cep">CEP</string>
+    <string name="endereco">Endereço</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="num">Núm.</string>
+    <string name="numero">número</string>
+    <string name="bairro">Bairro</string>
+    <string name="cidade">Cidade</string>
+    <string name="uf">UF</string>
+    <string name="id">ID</string>
+    <string name="CLIENTE">CLIENTE</string>
+    <string name="salvar">SALVAR</string>
+    <string name="deletar">DELETAR</string>
+    <string name="erro_bucar_cep">Erro ao buscar pelo CEP</string>
+</resources>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView android:layout_width="match_parent" android:layout_height="0dp"
+              android:textStyle="bold"
+              android:gravity="center"
+              android:textColor="#000000"
+              android:text="@string/CLIENTE"
+              android:textSize="22sp"
+              android:layout_weight="3"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+
+        <TextView android:text="@string/id"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="3"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpID"
+                  style="@style/appItemDetailClientEdit"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:enabled="false"
+                  android:layout_weight="2"
+                  android:contentDescription="@string/nome_do_cliente"/>
+
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+              android:layout_weight="5"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/nome"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="3"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpName"
+                  style="@style/appItemDetailClientEdit"
+                  android:layout_width="0dp"
+                  android:gravity="left"
+                  android:layout_height="match_parent"
+                  android:layout_weight="7"
+                  android:contentDescription="@string/nome_do_cliente"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/cpf"
+                  style="@style/appItemDetailClient"
+                  android:inputType="text"
+                  android:layout_width="0dp"
+                  android:layout_weight="3"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpCpf"
+                  android:inputType="text"
+                  style="@style/appItemDetailClientEdit"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="7"
+                  android:contentDescription="@string/cpf"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/data_de_nasc"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="3"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpDataDeNascimento"
+                  android:layout_width="0dp"
+                  style="@style/appItemDetailClientEdit"
+                  android:inputType="date"
+                  android:layout_height="match_parent"
+                  android:layout_weight="4"
+                  android:contentDescription="@string/data_de_nascimento"/>
+
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+              android:layout_weight="3"/>
+
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="0.7"/>
+
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/cep"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="2.5"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpCEP"
+                  android:layout_width="0dp"
+                  style="@style/appItemDetailClientEdit"
+                  android:inputType="text"
+                  android:layout_height="match_parent"
+                  android:layout_weight="4"
+                  android:contentDescription="@string/cep"/>
+
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+              android:layout_weight="3.5"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/logradouro"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="2.5"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpLogradouro"
+                  android:layout_width="0dp"
+                  style="@style/appItemDetailClientEdit"
+                  android:inputType="text"
+                  android:gravity="left"
+                  android:layout_height="match_parent"
+                  android:layout_weight="7.5"
+                  android:contentDescription="@string/logradouro"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/num"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="2.5"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpNumero"
+                  android:layout_width="0dp"
+                  style="@style/appItemDetailClientEdit"
+                  android:inputType="text"
+                  android:layout_height="match_parent"
+                  android:layout_weight="2"
+                  android:contentDescription="@string/numero"/>
+
+        <TextView android:text="@string/bairro"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="2"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpBairro"
+                  android:layout_width="0dp"
+                  android:inputType="text"
+                  style="@style/appItemDetailClientEdit"
+                  android:layout_height="match_parent"
+                  android:layout_weight="3.5"
+                  android:contentDescription="@string/bairro"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2">
+
+        <TextView android:text="@string/cidade"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="2.5"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpCidade"
+                  android:layout_width="0dp"
+                  style="@style/appItemDetailClientEdit"
+                  android:inputType="text"
+                  android:layout_height="match_parent"
+                  android:layout_weight="4.5"
+                  android:contentDescription="@string/cidade"/>
+
+        <TextView android:text="@string/uf"
+                  style="@style/appItemDetailClient"
+                  android:layout_width="0dp"
+                  android:layout_weight="1.5"
+                  android:layout_height="match_parent"/>
+
+        <EditText android:id="@+id/inpUF"
+                  android:layout_width="0dp"
+                  style="@style/appItemDetailClientEdit"
+                  android:inputType="text"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1.5"
+                  android:contentDescription="@string/uf"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="0dp"
+          android:layout_weight="0.5"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="60dp">
+
+        <ImageButton android:layout_width="60dp" android:layout_height="match_parent"
+                     android:layout_gravity="center"
+                     android:id="@+id/imgSalvar"
+                     android:background="@drawable/botoes_arredondados"
+                     android:src="@drawable/ic_save_blue_32dp"
+                     tools:ignore="VectorDrawableCompat"
+                     android:contentDescription="@string/salvar"/>
+
+        <ImageButton android:layout_width="60dp" android:layout_height="match_parent"
+                     android:layout_gravity="center"
+                     android:id="@+id/imgDeletar"
+                     android:background="@drawable/botoes_arredondados"
+                     android:src="@drawable/ic_delete_black_24dp"
+                     tools:ignore="VectorDrawableCompat"
+                     android:contentDescription="@string/deletar"/>
+
+    </LinearLayout>
+
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="0.5"/>
+
+</LinearLayout>
