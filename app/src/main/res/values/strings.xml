@@ -24,4 +24,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="abrir_mapa">Abrir Mapa</string>
     <string name="ver_localizacao">Clique para ver a localização</string>
+    <string name="criar_novo_cliente">Criar Novo Cliente</string>
 </resources>

@@ -33,6 +33,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Endereco endereco;
     private LatLng localizacao;
 
+    private static final String ENDERECO = "ENDERECO";
+
     private static final int REQUEST_FINE_LOCATION = 0;
 
     @Override
@@ -40,8 +42,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("ENDERECO")) {
-            endereco = (Endereco) getIntent().getSerializableExtra("ENDERECO");
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ENDERECO)) {
+            endereco = (Endereco) getIntent().getSerializableExtra(ENDERECO);
+        }else{
+            finish();
         }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

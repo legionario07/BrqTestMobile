@@ -29,7 +29,7 @@
                   android:layout_height="match_parent"
                   android:enabled="false"
                   android:layout_weight="2"
-                  android:contentDescription="@string/nome_do_cliente"/>
+                  android:importantForAccessibility="no"/>
 
         <View android:layout_width="0dp" android:layout_height="match_parent"
               android:layout_weight="5"/>

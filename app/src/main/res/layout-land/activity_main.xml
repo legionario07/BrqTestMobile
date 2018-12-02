@@ -17,6 +17,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="1"
+                  android:importantForAccessibility="no"
                   android:contentDescription="@string/clientes"/>
 
         <ListView android:id="@+id/lstClientes"
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/criar_novo_cliente"
             app:srcCompat="@android:drawable/ic_input_add"/>
 
 </FrameLayout>

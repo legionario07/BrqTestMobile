@@ -13,6 +13,7 @@ import br.com.brqtest.deserializers.CEPDeserializer;
 import br.com.brqtest.model.Cliente;
 import br.com.brqtest.model.Endereco;
 import br.com.brqtest.services.ApiCEPRetrofit;
+import br.com.brqtest.utils.VerificaConexaoStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit2.Call;
@@ -39,6 +40,9 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
     private DatabaseHelper dh;
     private EnderecoDao enderecoDao;
     private ClienteDao clienteDao;
+
+    private static final String CLIENTE_DETAIL = "CLIENTE_DETAIL";
+    private static final String ENDERECO = "ENDERECO";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,8 +75,8 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
             restoreBundle(savedInstanceState);
         }
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CLIENTE_DETAIL")) {
-            cliente = (Cliente) getIntent().getSerializableExtra("CLIENTE_DETAIL");
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(CLIENTE_DETAIL)) {
+            cliente = (Cliente) getIntent().getSerializableExtra(CLIENTE_DETAIL);
             fillDataInView();
         } else {
             cliente = new Cliente();
@@ -98,6 +102,11 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
         inpCEP.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+
+                if(!VerificaConexaoStrategy.verificarConexao(ClienteDetailActivity.this)){
+                    Toast.makeText(ClienteDetailActivity.this, "Sem conexão para buscar o CEP", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if (!hasFocus) {
                     // code to execute when EditText loses focus
@@ -260,7 +269,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
                 }
 
                 Intent i = new Intent(this, MapsActivity.class);
-                i.putExtra("ENDERECO", cliente.getEndereco());
+                i.putExtra(ENDERECO, cliente.getEndereco());
                 startActivity(i);
 
                 break;
