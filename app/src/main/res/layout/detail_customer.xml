@@ -130,9 +130,19 @@
                   android:contentDescription="@string/cep"/>
 
         <View android:layout_width="0dp" android:layout_height="match_parent"
-              android:layout_weight="3.5"/>
+              android:layout_weight="1.1"/>
 
+        <ImageButton android:layout_width="40dp" android:layout_height="40dp"
+                     android:layout_gravity="center"
+                     android:id="@+id/imgMap"
+                     android:tooltipText="@string/ver_localizacao"
+                     android:background="@drawable/botoes_arredondados"
+                     android:src="@drawable/ic_navigation_blue_32dp"
+                     tools:ignore="VectorDrawableCompat"
+                     android:contentDescription="@string/abrir_mapa"/>
 
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+              android:layout_weight="1.1"/>
 
     </LinearLayout>
 

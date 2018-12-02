@@ -172,6 +172,21 @@
                   android:layout_weight="8"
                   android:contentDescription="@string/logradouro"/>
 
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+              android:layout_weight="0.2"/>
+
+        <ImageButton android:layout_width="30dp" android:layout_height="30dp"
+                     android:layout_gravity="center"
+                     android:id="@+id/imgMap"
+                     android:tooltipText="@string/ver_localizacao"
+                     android:background="@drawable/botoes_arredondados"
+                     android:src="@drawable/ic_navigation_blue_32dp"
+                     tools:ignore="VectorDrawableCompat"
+                     android:contentDescription="@string/abrir_mapa"/>
+
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+              android:layout_weight="0.2"/>
+
     </LinearLayout>
 
 
@@ -182,7 +197,7 @@
         <TextView android:text="@string/cidade"
                   style="@style/appItemDetailClientLand"
                   android:layout_width="0dp"
-                  android:layout_weight="2"
+                  android:layout_weight="1.8"
                   android:layout_height="match_parent"/>
 
         <EditText android:id="@+id/inpCidade"

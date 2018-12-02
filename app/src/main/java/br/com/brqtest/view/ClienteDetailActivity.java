@@ -21,6 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
     private EditText inpNome, inpID, inpCPF, inpDataDeNascimento, inpCEP, inpLogradouro,
             inpNumero, inpBairro, inpCidade, inpUF;
 
-    private ImageButton imgSalvar, imgDeletar;
+    private ImageButton imgSalvar, imgDeletar, imgMapa;
     private Cliente cliente;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private ProgressBar progressBar;
@@ -56,6 +57,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
         inpUF = findViewById(R.id.inpUF);
         imgSalvar = findViewById(R.id.imgSalvar);
         imgDeletar = findViewById(R.id.imgDeletar);
+        imgMapa = findViewById(R.id.imgMap);
 
         dh = new DatabaseHelper(ClienteDetailActivity.this);
         try {
@@ -82,6 +84,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
 
         imgSalvar.setOnClickListener(this);
         imgDeletar.setOnClickListener(this);
+        imgMapa.setOnClickListener(this);
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Endereco.class, new CEPDeserializer()).create();
 
@@ -215,14 +218,14 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
                 }
 
                 //Eh update?
-                if(cliente.getId()!=null && cliente.getId()>0){
+                if (cliente.getId() != null && cliente.getId() > 0) {
                     try {
                         enderecoDao.update(cliente.getEndereco());
                         clienteDao.update(cliente);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     try {
                         cliente.getEndereco().setId(enderecoDao.create(cliente.getEndereco()));
                         clienteDao.create(cliente);
@@ -230,6 +233,8 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
                         e.printStackTrace();
                     }
                 }
+
+                finish();
 
                 break;
 
@@ -241,12 +246,26 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
                     e.printStackTrace();
                 }
 
+                finish();
 
+                break;
+
+            case R.id.imgMap:
+
+                String retorno = validarEndereco();
+
+                if(retorno.length()>0){
+                    Toast.makeText(this, retorno,Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Intent i = new Intent(this, MapsActivity.class);
+                i.putExtra("ENDERECO", cliente.getEndereco());
+                startActivity(i);
 
                 break;
         }
 
-        finish();
 
 
     }
@@ -261,7 +280,19 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
             retorno.append("O CPF deve ser Preenchido");
         } else if (inpDataDeNascimento.getText().toString().length() == 0) {
             retorno.append("A Data de Nascimento deve ser Preenchida");
-        } else if (inpCEP.getText().toString().length() == 0) {
+        } else {
+              retorno.append(validarEndereco()) ;
+        }
+
+        return retorno.toString();
+
+
+    }
+
+    private String validarEndereco() {
+
+        StringBuilder retorno = new StringBuilder();
+        if (inpCEP.getText().toString().length() == 0) {
             retorno.append("O CEP deve ser preenchido");
         } else if (inpLogradouro.getText().toString().length() == 0) {
             retorno.append("O Logradouro deve ser Preenchido");
@@ -274,16 +305,15 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
         }
 
         return retorno.toString();
-
-
     }
 
     @Override
     public void finish() {
-        super.finish();
 
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+
+        super.finish();
 
     }
 }
