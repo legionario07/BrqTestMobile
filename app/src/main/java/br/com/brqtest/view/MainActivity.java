@@ -3,6 +3,7 @@ package br.com.brqtest.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FloatingActionButton fab = findViewById(R.id.fabNovoCliente);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ClienteDetailActivity.class);
+                startActivity(i);
+            }
+        });
 
         dh = new DatabaseHelper(MainActivity.this);
         try {
