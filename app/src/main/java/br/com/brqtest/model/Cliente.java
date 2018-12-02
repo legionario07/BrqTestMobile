@@ -1,13 +1,23 @@
 package br.com.brqtest.model;
 
+import br.com.brqtest.R;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.Date;
 
+@DatabaseTable(tableName = "cliente")
 public class Cliente extends EntidadeDominio {
 
-
+    @DatabaseField(generatedId = true)
+    private Integer id;
+    @DatabaseField
     private String nameFull;
+    @DatabaseField
     private String cpf;
+    @DatabaseField(foreign = true)
     private Endereco endereco;
+    @DatabaseField
     private Date dataDeNascimento;
 
 
@@ -61,5 +71,13 @@ public class Cliente extends EntidadeDominio {
                 ", endereco=" + endereco +
                 ", dataDeNascimento=" + dataDeNascimento +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

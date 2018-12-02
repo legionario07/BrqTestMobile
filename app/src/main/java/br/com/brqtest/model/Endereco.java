@@ -1,14 +1,27 @@
 package br.com.brqtest.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "endereco")
 public class Endereco extends EntidadeDominio {
 
+    @DatabaseField(generatedId = true)
+    private Integer id;
+    @DatabaseField
     private String logradouro;
+    @DatabaseField
     private String numero;
+    @DatabaseField
     private String complemento;
+    @DatabaseField
     private String bairro;
+    @DatabaseField
     private String cidade;
     private String localidade;
+    @DatabaseField
     private String uf;
+    @DatabaseField
     private String cep;
 
     public Endereco(Integer id){
@@ -94,5 +107,13 @@ public class Endereco extends EntidadeDominio {
 
     public void setLocalidade(String localidade) {
         this.localidade = localidade;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

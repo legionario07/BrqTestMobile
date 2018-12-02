@@ -41,9 +41,9 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> {
         txtDateOfBirth.setText(sdf.format(cliente.getDataDeNascimento()));
 
         if(position%2==0){
-            txtNameCustomer.setBackgroundColor(Color.CYAN);
-            txtCPFCustomer.setBackgroundColor(Color.CYAN);
-            txtDateOfBirth.setBackgroundColor(Color.CYAN);
+            txtNameCustomer.setBackgroundColor(Color.LTGRAY);
+            txtCPFCustomer.setBackgroundColor(Color.LTGRAY);
+            txtDateOfBirth.setBackgroundColor(Color.LTGRAY);
         }
 
         return convertView;
