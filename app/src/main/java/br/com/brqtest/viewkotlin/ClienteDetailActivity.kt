@@ -69,6 +69,7 @@ class ClienteDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         dh = DatabaseHelper(this@ClienteDetailActivity)
         try {
+
             clienteDao = ClienteDao(dh!!.connectionSource)
             enderecoDao = EnderecoDao(dh!!.connectionSource)
         } catch (e: SQLException) {
@@ -153,7 +154,6 @@ class ClienteDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         inpCEP!!.setText(endereco.cep)
         inpLogradouro!!.setText(endereco.logradouro)
-        inpNumero!!.setText(endereco.numero)
         inpBairro!!.setText(endereco.bairro)
         inpCidade!!.setText(endereco.localidade)
         inpUF!!.setText(endereco.uf)
@@ -180,13 +180,12 @@ class ClienteDetailActivity : AppCompatActivity(), View.OnClickListener {
         cliente!!.nameFull = inpNome!!.text.toString().toUpperCase().trim { it <= ' ' }
         cliente!!.cpf = inpCPF!!.text.toString().trim { it <= ' ' }
         cliente!!.dataDeNascimento = sdf.parse(inpDataDeNascimento!!.text.toString().trim { it <= ' ' })
-        val endereco = Endereco()
-        endereco.cep = inpCEP!!.text.toString().trim { it <= ' ' }
-        endereco.logradouro = inpLogradouro!!.text.toString().trim { it <= ' ' }
-        endereco.numero = inpNumero!!.text.toString().trim { it <= ' ' }
-        endereco.bairro = inpBairro!!.text.toString().trim { it <= ' ' }
-        endereco.cidade = inpCidade!!.text.toString().trim { it <= ' ' }
-        endereco.uf = inpUF!!.text.toString().trim { it <= ' ' }
+        cliente!!.endereco!!.cep = inpCEP!!.text.toString().trim { it <= ' ' }
+        cliente!!.endereco!!.logradouro = inpLogradouro!!.text.toString().trim { it <= ' ' }
+        cliente!!.endereco!!.numero = inpNumero!!.text.toString().trim { it <= ' ' }
+        cliente!!.endereco!!.bairro = inpBairro!!.text.toString().trim { it <= ' ' }
+        cliente!!.endereco!!.cidade = inpCidade!!.text.toString().trim { it <= ' ' }
+        cliente!!.endereco!!.uf = inpUF!!.text.toString().trim { it <= ' ' }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -223,106 +222,110 @@ class ClienteDetailActivity : AppCompatActivity(), View.OnClickListener {
                     return
                 }
 
-                //Eh update?
                 if (cliente!!.id != null && cliente!!.id!! > 0) {
                     try {
+
                         enderecoDao!!.update(cliente!!.endereco)
+
                         clienteDao!!.update(cliente)
                     } catch (e: SQLException) {
                         e.printStackTrace()
                     }
-
                 } else {
                     try {
-                        cliente!!.endereco!!.id = enderecoDao!!.create(cliente!!.endereco)
+                        var endereco = cliente!!.endereco!!
+
+                        enderecoDao!!.create(endereco)
+                        cliente!!.endereco = endereco
+
                         clienteDao!!.create(cliente)
                     } catch (e: SQLException) {
                         e.printStackTrace()
                     }
-
                 }
 
-                finish()
-            }
 
-            R.id.imgDeletar -> {
-
-                try {
-                    clienteDao!!.delete(cliente)
-                } catch (e: SQLException) {
-                    e.printStackTrace()
-                }
-
-                finish()
-            }
-
-            R.id.imgMap -> {
-
-                val retorno = validarEndereco()
-
-                if (retorno.length > 0) {
-                    Toast.makeText(this, retorno, Toast.LENGTH_LONG).show()
-                    return
-                }
-
-                val i = Intent(this, MapsActivity::class.java)
-                i.putExtra(ENDERECO, cliente!!.endereco)
-                startActivity(i)
-            }
+            finish()
         }
 
+        R.id.imgDeletar -> {
 
-    }
+            try {
+                clienteDao!!.delete(cliente)
+            } catch (e: SQLException) {
+                e.printStackTrace()
+            }
 
-    private fun validarDados(): String {
-
-        val retorno = StringBuilder()
-
-        if (inpNome!!.text.toString().length == 0) {
-            retorno.append("O Nome deve ser Preenchido")
-        } else if (inpCPF!!.text.toString().length == 0) {
-            retorno.append("O CPF deve ser Preenchido")
-        } else if (inpDataDeNascimento!!.text.toString().length == 0) {
-            retorno.append("A Data de Nascimento deve ser Preenchida")
-        } else {
-            retorno.append(validarEndereco())
+            finish()
         }
 
-        return retorno.toString()
+        R.id.imgMap -> {
 
+            val retorno = validarEndereco()
 
-    }
+            if (retorno.length > 0) {
+                Toast.makeText(this, retorno, Toast.LENGTH_LONG).show()
+                return
+            }
 
-    private fun validarEndereco(): String {
-
-        val retorno = StringBuilder()
-        if (inpCEP!!.text.toString().length == 0) {
-            retorno.append("O CEP deve ser preenchido")
-        } else if (inpLogradouro!!.text.toString().length == 0) {
-            retorno.append("O Logradouro deve ser Preenchido")
-        } else if (inpBairro!!.text.toString().length == 0) {
-            retorno.append("O Bairro deve ser Preenchido")
-        } else if (inpCidade!!.text.toString().length == 0) {
-            retorno.append("A cidade deve ser Preenchida")
-        } else if (inpUF!!.text.toString().length == 0) {
-            retorno.append("A UF deve ser Preenchida")
+            val i = Intent(this, MapsActivity::class.java)
+            i.putExtra(ENDERECO, cliente!!.endereco)
+            startActivity(i)
         }
-
-        return retorno.toString()
     }
 
-    override fun finish() {
 
-        val i = Intent(this, MainActivity::class.java)
-        startActivity(i)
+}
 
-        super.finish()
+private fun validarDados(): String {
 
+    val retorno = StringBuilder()
+
+    if (inpNome!!.text.toString().length == 0) {
+        retorno.append("O Nome deve ser Preenchido")
+    } else if (inpCPF!!.text.toString().length == 0) {
+        retorno.append("O CPF deve ser Preenchido")
+    } else if (inpDataDeNascimento!!.text.toString().length == 0) {
+        retorno.append("A Data de Nascimento deve ser Preenchida")
+    } else {
+        retorno.append(validarEndereco())
     }
 
-    companion object {
+    return retorno.toString()
 
-        private val CLIENTE_DETAIL = "CLIENTE_DETAIL"
-        private val ENDERECO = "ENDERECO"
+
+}
+
+private fun validarEndereco(): String {
+
+    val retorno = StringBuilder()
+    if (inpCEP!!.text.toString().length == 0) {
+        retorno.append("O CEP deve ser preenchido")
+    } else if (inpLogradouro!!.text.toString().length == 0) {
+        retorno.append("O Logradouro deve ser Preenchido")
+    } else if (inpBairro!!.text.toString().length == 0) {
+        retorno.append("O Bairro deve ser Preenchido")
+    } else if (inpCidade!!.text.toString().length == 0) {
+        retorno.append("A cidade deve ser Preenchida")
+    } else if (inpUF!!.text.toString().length == 0) {
+        retorno.append("A UF deve ser Preenchida")
     }
+
+    return retorno.toString()
+}
+
+override fun finish() {
+
+    val i = Intent(this, MainActivity::class.java)
+    startActivity(i)
+
+    super.finish()
+
+}
+
+companion object {
+
+    private val CLIENTE_DETAIL = "CLIENTE_DETAIL"
+    private val ENDERECO = "ENDERECO"
+}
 }

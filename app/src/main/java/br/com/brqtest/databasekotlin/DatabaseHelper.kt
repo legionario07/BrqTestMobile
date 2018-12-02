@@ -45,7 +45,7 @@ class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context, DB_NAM
     }
 
     companion object {
-        private val VERSION = 2
+        private val VERSION = 5
         private val DB_NAME = "brqtest"
     }
 }
