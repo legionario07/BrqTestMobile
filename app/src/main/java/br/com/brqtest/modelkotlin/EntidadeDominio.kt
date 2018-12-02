@@ -1,18 +1,5 @@
 package br.com.brqtest.modelkotlin
 
-abstract class EntidadeDominio {
-    private var id: Int? = null
+import java.io.Serializable
 
-
-    fun getId(): Int? {
-        return id
-    }
-
-    override fun toString(): String {
-        return "id=" + id!!
-    }
-
-    fun setId(id: Int?) {
-        this.id = id
-    }
-}
+abstract class EntidadeDominio : Serializable

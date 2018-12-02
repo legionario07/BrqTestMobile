@@ -10,7 +10,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.LargeTest
 import android.support.test.runner.AndroidJUnit4
-import br.com.brqtest.view.ClienteDetailActivity
+import br.com.brqtest.viewkotlin.ClienteDetailActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

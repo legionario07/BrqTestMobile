@@ -1,59 +1,35 @@
 package br.com.brqtest.modelkotlin
 
-import br.com.brqtest.model.Endereco
+import com.j256.ormlite.field.DatabaseField
+import com.j256.ormlite.table.DatabaseTable
 import java.util.*
 
-class Cliente: EntidadeDominio(){
+@DatabaseTable(tableName = "cliente")
+class Cliente() : EntidadeDominio() {
 
-    private var nameFull: String? = null
-    private var cpf: String? = null
-    private var endereco: Endereco? = null
-    private var date: Date? = null
+    @DatabaseField(generatedId = true)
+    var id: Int? = null
+    @DatabaseField
+    var nameFull: String? = null
+    @DatabaseField
+    var cpf: String? = null
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    var endereco: Endereco? = null
+    @DatabaseField
+    var dataDeNascimento: Date? = null
 
 
-    fun Cliente(id: Int?) {
-        Cliente()
-        setId(id)
-    }
 
-    fun Cliente() {
-        setEndereco(Endereco())
-    }
-
-    fun getNameFull(): String? {
-        return nameFull
-    }
-
-    fun setNameFull(nameFull: String) {
-        this.nameFull = nameFull
-    }
-
-    fun getCpf(): String? {
-        return cpf
-    }
-
-    fun setCpf(cpf: String) {
-        this.cpf = cpf
-    }
-
-    fun getEndereco(): Endereco? {
-        return endereco
-    }
-
-    fun setEndereco(endereco: Endereco) {
-        this.endereco = endereco
-    }
-
-    fun getDate(): Date? {
-        return date
-    }
-
-    fun setDate(date: Date) {
-        this.date = date
+    init {
+        endereco = Endereco()
     }
 
     override fun toString(): String {
-        return """Cliente{nameFull='$nameFull${'\''.toString()}, cpf='$cpf${'\''.toString()}, endereco=$endereco, date=$date${'}'.toString()}"""
+        return "Cliente{" +
+                "nameFull='" + nameFull + '\''.toString() +
+                ", cpf='" + cpf + '\''.toString() +
+                ", endereco=" + endereco +
+                ", dataDeNascimento=" + dataDeNascimento +
+                '}'.toString()
     }
-
 }
