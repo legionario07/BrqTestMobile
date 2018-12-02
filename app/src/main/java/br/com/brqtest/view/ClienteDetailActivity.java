@@ -155,7 +155,6 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
 
         inpCEP.setText(endereco.getCep());
         inpLogradouro.setText(endereco.getLogradouro());
-        inpNumero.setText(endereco.getNumero());
         inpBairro.setText(endereco.getBairro());
         inpCidade.setText(endereco.getLocalidade());
         inpUF.setText(endereco.getUf());
@@ -181,13 +180,12 @@ public class ClienteDetailActivity extends AppCompatActivity implements View.OnC
         cliente.setNameFull(inpNome.getText().toString().toUpperCase().trim());
         cliente.setCpf(inpCPF.getText().toString().trim());
         cliente.setDataDeNascimento(sdf.parse(inpDataDeNascimento.getText().toString().trim()));
-        Endereco endereco = new Endereco();
-        endereco.setCep(inpCEP.getText().toString().trim());
-        endereco.setLogradouro(inpLogradouro.getText().toString().trim());
-        endereco.setNumero(inpNumero.getText().toString().trim());
-        endereco.setBairro(inpBairro.getText().toString().trim());
-        endereco.setCidade(inpCidade.getText().toString().trim());
-        endereco.setUf(inpUF.getText().toString().trim());
+        cliente.getEndereco().setCep(inpCEP.getText().toString().trim());
+        cliente.getEndereco().setLogradouro(inpLogradouro.getText().toString().trim());
+        cliente.getEndereco().setNumero(inpNumero.getText().toString().trim());
+        cliente.getEndereco().setBairro(inpBairro.getText().toString().trim());
+        cliente.getEndereco().setCidade(inpCidade.getText().toString().trim());
+        cliente.getEndereco().setUf(inpUF.getText().toString().trim());
     }
 
     @Override
